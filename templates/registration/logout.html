@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+{% block title %}taskstick - log out{% endblock %}
+
+{% block content %}
+<h2>Log Out</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log Out</button>
+</form>
+{% endblock %}

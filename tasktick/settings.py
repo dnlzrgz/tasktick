@@ -3,21 +3,26 @@ Django settings for tasktick project.
 """
 
 from pathlib import Path
+from environs import Env
+
+# Load env variables
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+# Keep the secret key used in production secret!
+SECRET_KEY = env.str(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-n_$ygen%espc=9o3mr62%y3h7)2)egdlzmd+-j49d9!lnnxbt2",
+)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-n_$ygen%espc=9o3mr62%y3h7)2)egdlzmd+-j49d9!lnnxbt2"
+# Don't run with debug turned on in production!
+DEBUG = env.bool("DEBUG", False)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", [])
 
 
 # Application definition
@@ -70,6 +75,7 @@ WSGI_APPLICATION = "tasktick.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# TODO: check database settings with env variables.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -77,6 +83,7 @@ DATABASES = {
     }
 }
 
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -104,6 +111,8 @@ LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
+SITE_ID = 1
+
 USE_I18N = True
 
 USE_TZ = True
@@ -123,8 +132,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
-
-# Auth settings
-
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = env.str("LOGIN_REDIRECT_URL", "home")
+ACCOUNT_LOGOUT_REDIRECT_URL = env.str("LOGOUT_REDIRECT_URL", "home")

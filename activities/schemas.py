@@ -1,6 +1,7 @@
 from typing import Optional
 from datetime import datetime
 from ninja import Schema
+from projects.schemas import ProjectOut
 
 
 class ActivityIn(Schema):
@@ -8,6 +9,7 @@ class ActivityIn(Schema):
     description: Optional[str] = None
     start_date: datetime
     end_date: Optional[datetime] = None
+    project_name: Optional[str] = None
 
 
 class ActivityUpdate(Schema):
@@ -15,6 +17,7 @@ class ActivityUpdate(Schema):
     description: Optional[str] = None
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
+    project_name: Optional[str] = None
 
 
 class ActivityOut(Schema):
@@ -23,3 +26,4 @@ class ActivityOut(Schema):
     description: Optional[str] = None
     start_date: datetime
     end_date: Optional[datetime] = None
+    project: Optional[ProjectOut] = None

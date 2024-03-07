@@ -4,15 +4,25 @@ from ninja import Router
 from ninja.errors import HttpError
 from activities.models import Activity
 from activities.schemas import ActivityIn, ActivityUpdate, ActivityOut
+from projects.models import Project
 
 router = Router()
 
 
 @router.post("/", response=ActivityOut)
 def create_activity(request, payload: ActivityIn):
+    project = None
+    if payload.project_name:
+        project = get_object_or_404(
+            Project,
+            user=request.user,
+            name=payload.project_name,
+        )
+
     activity = Activity.objects.create(
         user=request.user,
-        **payload.dict(),
+        project=project,
+        **payload.dict(exclude={"project_name"}),
     )
     return activity
 
@@ -38,7 +48,21 @@ def update_activity(request, activity_id: int, payload: ActivityUpdate):
     if activity.user != request.user:
         raise HttpError(404, "Not Found: No Activity matches the given query.")
 
-    for attr, value in payload.dict(exclude_unset=True).items():
+    project = None
+    if payload.project_name:
+        project = get_object_or_404(
+            Project,
+            user=request.user,
+            name=payload.project_name,
+        )
+        activity.project = project
+
+    # TODO: Handle remove project
+
+    for attr, value in payload.dict(
+        exclude_unset=True,
+        exclude={"project_name"},
+    ).items():
         setattr(activity, attr, value)
 
     activity.save()

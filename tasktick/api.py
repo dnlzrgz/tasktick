@@ -2,6 +2,8 @@ from ninja import NinjaAPI
 from ninja.security import django_auth
 
 api = NinjaAPI(
+    title="taskstick API",
+    version="1.0.0",
     csrf=True,
     auth=django_auth,
 )

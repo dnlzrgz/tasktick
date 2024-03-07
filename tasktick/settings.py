@@ -71,15 +71,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "tasktick.wsgi.application"
 
+# Cache
+# https://docs.djangoproject.com/en/5.0/ref/settings/#cache
+
+CACHES = {
+    "default": {
+        "BACKEND": env.str(
+            "CACHE_BACKEND",
+            "django.core.cache.backends.dummy.DummyCache",
+        ),
+        "LOCATION": env.str("CACHE_URL", ""),
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# TODO: check database settings with env variables.
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": env.str("DATABASE_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": env.path("DATABASE_NAME", BASE_DIR / "db.sqlite3"),
+        "USER": env.str("DATABASE_USER", ""),
+        "PASSWORD": env.str("DATABASE_PASSWORD", ""),
+        "HOST": env.str("DATABASE_HOST", ""),
+        "PORT": env.str("DATABASE_PORT", ""),
     }
 }
 

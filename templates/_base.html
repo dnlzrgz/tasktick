@@ -3,16 +3,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>{% block title %}taskstick - dead simple time tracking{% endblock title %}</title>
-</head>
+    <title>{% block title %}taskstick - dead simple time tracking{% endblock title %}</title>
 
-<body>
-  {% block content %}
-  {% endblock content %}
-</body>
+    <!-- System CSS -->
+    <link rel="stylesheet" href="{% static 'css/system.css' %}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+  </head>
 
+  <body>
+    {% block content %}
+    {% endblock content %}
+
+  <!-- Alpine.js -->
+    <script src="{% static 'js/alpine.js' %}" defer></script>
+  </body>
 </html>

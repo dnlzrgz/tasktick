@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tasktick"
-version = "0.0.5"
+version = "0.0.7"
 description = ""
 authors = ["dnlzrgz <24715931+dnlzrgz@users.noreply.github.com>"]
 readme = "README.md"
@@ -17,6 +17,8 @@ psycopg = {extras = ["binary"], version = "^3.1.18"}
 ruff = "^0.3.0"
 pre-commit = "^3.6.2"
 commitizen = "^3.16.0"
+django-browser-reload = "^1.12.1"
+djhtml = "^3.0.6"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+{% block content %}
+  <header class="window">
+    <div class="title-bar">
+      <h1 class="title">Taskstick</h1>
+    </div>
+  </div>
+  </header>
+  <main class="home">
+    <div class="window auth-window">
+      <div class="title-bar">
+        <button aria-label="Close" class="close"></button>
+        <h1 class="title">Auth</h1>
+        <button aria-label="Resize" class="resize"></button>
+      </div>
+      <div class="separator"></div>
+
+      <div class="window-pane">
+        <form action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+          <label for="username">Username</label><br>
+          <input id="username" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" type="text" placeholder="StormTrooper" required/><br><br>
+          <label for="password">Password</label><br>
+          <input id="password" name="password" autocomplete="current-password" type="password" placeholder="Password" required/><br><br>
+          <div>
+            <button class="btn">Log In</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+{% endblock %}
